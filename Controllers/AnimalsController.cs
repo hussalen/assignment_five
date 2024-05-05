@@ -53,11 +53,11 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Add([FromBody] Animal animal)
+    public IActionResult Add(Animal animal)
     {
         string addDesc = animal.Description is not null ? ", " + AnimalDBField.Description : "";
         string query =
-            $"INSERT INTO Animal({AnimalDBField.Name} {addDesc}, {AnimalDBField.Category}, {AnimalDBField.Area}) VALUES ({animal.Name}, {animal.Category}, {animal.Area})";
+            $"INSERT INTO Animal({AnimalDBField.IdAnimal}, {AnimalDBField.Name} {addDesc}, {AnimalDBField.Category}, {AnimalDBField.Area}) VALUES ({animal.IdAnimal},{animal.Name}, {animal.Category}, {animal.Area})";
         try
         {
             DataTable results = _dbManager.ExecuteQuery(query);
@@ -70,7 +70,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPut("{idAnimal}")]
-    public IActionResult Update([FromBody] Animal animal)
+    public IActionResult Update(Animal animal)
     {
         string addDesc = animal.Description is not null
             ? ", " + $"{AnimalDBField.Description}={animal.Description}"
